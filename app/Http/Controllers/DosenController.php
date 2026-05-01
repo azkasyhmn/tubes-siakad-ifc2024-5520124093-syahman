@@ -44,25 +44,39 @@ class DosenController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $nidn)
     {
-        //
+        $detailDosen = Dosen::findOrFail($nidn);
+        return view('pages.dosen.detail-dosen', compact('detailDosen'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $nidn)
     {
-        //
+        $detailDosen = Dosen::findOrFail($nidn);
+        return view('pages.dosen.form-create', compact('detailDosen'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $nidn)
     {
-        //
+        $validated = $request->validate(
+            [
+                'nidn' => 'required|min:3',
+                'nama' => 'required|min:3',
+            ],
+            [
+                'nidn.required' => 'NIDN harus diisi.',
+                'nama.min' => 'nama terlalu pendek, minimal 3 karakter'
+            ]
+        );
+
+        Dosen::where('nidn', $nidn)->update($validated);
+        return redirect()->route('dosen.index')->with('success', 'Data berhasil di update!');
     }
 
     /**

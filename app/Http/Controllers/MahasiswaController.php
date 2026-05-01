@@ -45,25 +45,44 @@ class MahasiswaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $npm)
     {
-        //
+        $detailMahasiswa = Mahasiswa::findOrFail($npm);
+        $detailDosen = Dosen::find($detailMahasiswa->nidn);
+        return view('pages.mahasiswa.detail-mahasiswa', compact('detailMahasiswa'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $npm)
     {
-        //
+        $detailMahasiswa = Mahasiswa::findOrFail($npm);
+        $dosen = Dosen::all();
+        $detailDosen = Dosen::find($detailMahasiswa->nidn);
+        return view('pages.mahasiswa.form-create', compact('detailMahasiswa', 'dosen', 'detailDosen'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $npm)
     {
-        //
+        $validated = $request->validate(
+            [
+                'npm' => 'required|min:10',
+                'nidn' => 'required|min:10',
+                'nama' => 'required|min:3',
+            ],
+            [
+                'npm.required' => 'NPM harus diisi.',
+                'nidn.required' => 'NIDN harus diisi.',
+                'nama.min' => 'nama terlalu pendek, minimal 3 karakter'
+            ]
+        );
+
+        Mahasiswa::where('npm', $npm)->update($validated);
+        return redirect()->route('mahasiswa.index')->with('success', 'Data berhasil di update!');
     }
 
     /**
