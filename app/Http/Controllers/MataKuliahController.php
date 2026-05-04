@@ -43,25 +43,41 @@ class MataKuliahController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $kode_matakuliah)
     {
-        //
+        $detailMatkul = MataKuliah::findOrFail($kode_matakuliah);
+        return view('pages.matakuliah.detail-matakuliah', compact('detailMatkul'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $kode_matakuliah)
     {
-        //
+        $detailMatkul = MataKuliah::findOrFail($kode_matakuliah);
+        return view('pages.matakuliah.form-create', compact('detailMatkul'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $kode_matakuliah)
     {
-        //
+        $validated = $request->validate(
+            [
+                'kode_matakuliah' => 'required',
+                'nama' => 'required|min:3',
+                'sks' => 'required',
+            ],
+            [
+                'kode_matakuliah.required' => 'Kode Mata Kuliah harus diisi.',
+                'nama.min' => 'Nama terlalu pendek, minimal 3 karakter',
+                'sks.min' => 'Isi SKS'
+            ]
+        );
+
+        MataKuliah::where('kode_matakuliah', $kode_matakuliah)->update($validated);
+        return redirect()->route('matakuliah.index')->with('success', 'Data berhasil di update!');
     }
 
     /**

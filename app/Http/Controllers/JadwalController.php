@@ -52,7 +52,11 @@ class JadwalController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $detailJadwal = Jadwal::findOrFail($id);
+        $detailDosen = Jadwal::find($detailJadwal->nidn);
+        $detailMatkul = Jadwal::find($detailJadwal->kode_matakuliah);
+        return view('pages.jadwal.detail-jadwal', compact('detailJadwal'));
+
     }
 
     /**
@@ -60,7 +64,16 @@ class JadwalController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $detailJadwal = Jadwal::findOrFail($id);
+
+        $dosen = Dosen::all();
+        $mataKuliah = MataKuliah::all();
+
+        $detailDosen = Jadwal::find($detailJadwal->nidn);
+        $detailMatkul = Jadwal::find($detailJadwal->kode_matakuliah);
+
+        return view('pages.jadwal.form-create', compact('detailJadwal', 'dosen', 'mataKuliah', 'detailDosen', 'detailMatkul'));
+
     }
 
     /**
@@ -68,7 +81,17 @@ class JadwalController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validated = $request->validate([
+            'kode_matakuliah' => 'required',
+            'nidn' => 'required',
+            'kelas' => 'required',
+            'hari' => 'required',
+            'jam_mulai' => 'required',
+            'jam_selesai' => 'required|after:jam_mulai',
+        ]);
+
+        Jadwal::where('id', $id)->update($validated);
+        return redirect()->route('jadwal.index')->with('success', 'Data berhasil di update!');
     }
 
     /**

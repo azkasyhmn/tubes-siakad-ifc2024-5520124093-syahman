@@ -3,6 +3,11 @@
     <div class="container mt-3">
         <title>Jadwal</title>
         <h1>Halaman Jadwal</h1>
+        @if (session('success'))
+        <div class="alert alert-success" role="alert">
+            {{ session('success') }}
+        </div>
+        @endif
         <div class="card">
             <div class="card-body">
                 <div class="button mb-3 ">
@@ -30,7 +35,8 @@
                             <td>{{ $item->hari }}</td>
                             <td>{{ $item->jam_mulai }} - {{ $item->jam_selesai }}</td>
                             <td><button type="button" class="btn btn-danger">Hapus</button>
-                                <button type="button" class="btn btn-warning">Edit</button>
+                                <a href="{{ route('jadwal.edit', ['jadwal' => $item->id ]) }}" class="btn btn-warning">Edit</a>
+                                <a href="{{ route('jadwal.show', ['jadwal' => $item->id ]) }}" class="btn btn-info">Detail</a>
                             </td>
                         </tr>
                         @endforeach

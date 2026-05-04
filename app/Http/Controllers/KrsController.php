@@ -48,7 +48,10 @@ class KrsController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $detailKrs = Krs::findOrFail($id);
+        $detailMahasiswa = Krs::find($detailKrs->npm);
+        $detailMatkul = Krs::find($detailKrs->kode_matakuliah);
+        return view('pages.krs.detail-krs', compact('detailKrs'));
     }
 
     /**
@@ -56,7 +59,15 @@ class KrsController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $detailKrs = Krs::findOrFail($id);
+
+        $mahasiswa = Mahasiswa::all();
+        $mataKuliah = MataKuliah::all();
+
+        $detailMahasiswa = Krs::find($detailKrs->npm);
+        $detailMatkul = Krs::find($detailKrs->kode_matakuliah);
+
+        return view('pages.krs.form-create', compact('detailKrs', 'mahasiswa', 'mataKuliah', 'detailMahasiswa', 'detailMatkul'));
     }
 
     /**
@@ -64,7 +75,13 @@ class KrsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validated = $request->validate([
+            'kode_matakuliah' => 'required',
+            'npm' => 'required',
+        ]);
+
+        Krs::where('id', $id)->update($validated);
+        return redirect()->route('krs.index')->with('success', 'Data berhasil di update!');
     }
 
     /**
