@@ -83,8 +83,9 @@ class MataKuliahController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $kode_matakuliah)
     {
-        //
+        MataKuliah::where('kode_matakuliah', $kode_matakuliah)->delete();
+        return redirect()->route('matakuliah.index')->with('success', 'Data mata kuliah berhasil dihapus.');
     }
 }

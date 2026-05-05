@@ -30,7 +30,14 @@
                             <td>{{ $item->kode_matakuliah }}</td>
                             <td>{{ $item->nama }}</td>
                             <td>{{ $item->sks }}</td>
-                            <td><button type="button" class="btn btn-danger">Hapus</button>
+                            <td>
+                                <form action="{{ route('matakuliah.destroy', $item->kode_matakuliah) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Yakin ingin menghapus?')">
+                                        Hapus
+                                    </button>
+                                </form>
                                 <a href="{{ route('matakuliah.edit', ['matakuliah' => $item->kode_matakuliah ]) }}" class="btn btn-warning">Edit</a>
                                 <a href="{{ route('matakuliah.show', ['matakuliah' => $item->kode_matakuliah ]) }}" class="btn btn-info">Detail</a>
                             </td>

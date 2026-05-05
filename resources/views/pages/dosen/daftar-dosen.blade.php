@@ -28,7 +28,14 @@
                             <td scope="row">{{ $loop->iteration }}</td>
                             <td>{{ $item->nidn }}</td>
                             <td>{{ $item->nama }}</td>
-                            <td><button type="button" class="btn btn-danger">Hapus</button>
+                            <td>
+                                <form action="{{ route('dosen.destroy', $item->nidn) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Yakin ingin menghapus?')">
+                                        Hapus
+                                    </button>
+                                </form>
                                 <a href="{{ route('dosen.edit', ['dosen' => $item->nidn ]) }}" class="btn btn-warning">Edit</a>
                                 <a href="{{ route('dosen.show', ['dosen' => $item->nidn ]) }}" class="btn btn-info">Detail</a>
                             </td>

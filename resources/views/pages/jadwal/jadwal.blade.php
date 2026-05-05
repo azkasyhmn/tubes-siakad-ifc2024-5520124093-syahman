@@ -34,7 +34,14 @@
                             <td>{{ $item->kelas }}</td>
                             <td>{{ $item->hari }}</td>
                             <td>{{ $item->jam_mulai }} - {{ $item->jam_selesai }}</td>
-                            <td><button type="button" class="btn btn-danger">Hapus</button>
+                            <td>
+                                <form action="{{ route('jadwal.destroy', $item->id) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Yakin ingin menghapus?')">
+                                        Hapus
+                                    </button>
+                                </form>
                                 <a href="{{ route('jadwal.edit', ['jadwal' => $item->id ]) }}" class="btn btn-warning">Edit</a>
                                 <a href="{{ route('jadwal.show', ['jadwal' => $item->id ]) }}" class="btn btn-info">Detail</a>
                             </td>

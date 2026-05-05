@@ -28,7 +28,14 @@
                             <td scope="row">{{ $loop->iteration }}</td>
                             <td>{{ $item->mataKuliah->nama }}</td>
                             <td>{{ $item->mahasiswa->nama }}</td>
-                            <td><button type="button" class="btn btn-danger">Hapus</button>
+                            <td>
+                                <form action="{{ route('krs.destroy', $item->id) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Yakin ingin menghapus?')">
+                                        Hapus
+                                    </button>
+                                </form>
                                 <a href="{{ route('krs.edit', $item->id) }}" class="btn btn-warning">Edit</a>
                                 <a href="{{ route('krs.show', $item->id) }}" class="btn btn-info">Detail</a>
                             </td>

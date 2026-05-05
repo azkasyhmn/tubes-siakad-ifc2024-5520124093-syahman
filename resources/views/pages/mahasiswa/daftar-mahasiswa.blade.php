@@ -30,7 +30,14 @@
                             <td>{{ $item->npm }}</td>
                             <td>{{ $item->dosen->nama }}</td>
                             <td>{{ $item->nama }}</td>
-                            <td><button type="button" class="btn btn-danger">Hapus</button>
+                            <td>
+                                <form action="{{ route('mahasiswa.destroy', $item->npm) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Yakin ingin menghapus?')">
+                                        Hapus
+                                    </button>
+                                </form>
                                 <a href="{{ route('mahasiswa.edit', ['mahasiswa' => $item->npm ]) }}" class="btn btn-warning">Edit</a>
                                 <a href="{{ route('mahasiswa.show', ['mahasiswa' => $item->npm ]) }}" class="btn btn-info">Detail</a>
                             </td>

@@ -99,6 +99,7 @@ class JadwalController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Jadwal::where('id', $id)->delete();
+        return redirect()->route('jadwal.index')->with('success', 'Data jadwal berhasil dihapus.');
     }
 }
