@@ -10,10 +10,19 @@
         @endif
         <div class="card">
             <div class="card-body">
-                <div class="button mb-3 ">
-                    <a href="{{ route('dosen.create') }}" class="btn btn-primary">Tambah Dosen</a>
+                <div class="mb-3 d-flex align-items-center gap-2">
+                    @if(auth()->user()->isAdmin())
+                        <a href="{{ route('dosen.create') }}" class="btn btn-primary">Tambah Dosen</a>
+                    @endif
+                    <div class="input-group ms-auto" style="max-width:300px;">
+                        <span class="input-group-text bg-white">
+                            <i class="fa-solid fa-magnifying-glass text-muted"></i>
+                        </span>
+                        <input type="text" id="searchDosen" class="form-control"
+                            placeholder="Cari dosen...">
+                    </div>
                 </div>
-                <table class="table table-hover table-bordered">
+                <table class="table table-hover table-bordered" id="tableDosen">
                     <thead>
                         <tr>
                             <th scope="col">No</th>
@@ -46,4 +55,7 @@
             </div>
         </div>
     </div>
+    <script>
+        initSearch('searchDosen', 'tableDosen', [1, 2]);
+    </script>
 @endsection

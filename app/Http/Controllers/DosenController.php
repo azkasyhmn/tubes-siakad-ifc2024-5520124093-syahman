@@ -87,4 +87,6 @@ class DosenController extends Controller
         Dosen::where('nidn', $nidn)->delete();
         return redirect()->route('dosen.index')->with('success', 'Data dosen berhasil dihapus.');
     }
+
+    
 }
