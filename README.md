@@ -1,6 +1,4 @@
 # Nama Aplikasi
-
-Deskripsi singkat tentang aplikasi, misalnya:
 Aplikasi SIAKAD (Sistem Informasi Akademik) berbasis web yang dibangun
 menggunakan Laravel untuk mengelola data akademik mahasiswa.
 
