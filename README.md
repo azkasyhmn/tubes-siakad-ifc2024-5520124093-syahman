@@ -34,3 +34,14 @@ Mengambil mata kuliah dan export ke pdf
 
 ### Jadwal Kuliah
 Menampilkan jadwal kuliah
+
+### Website
+Link: (https://si-akademik.site.je/)
+
+## Login Admin
+Username: admin@gmail.com
+Password: 123
+
+## Login User
+Username: syahman@gmail.com
+Password: 246
