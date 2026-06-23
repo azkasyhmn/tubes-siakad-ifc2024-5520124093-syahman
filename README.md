@@ -36,7 +36,7 @@ Mengambil mata kuliah dan export ke pdf
 Menampilkan jadwal kuliah
 
 ### Website
-Link: (https://si-akademik.site.je/)
+Link: https://si-akademik.site.je/
 
 ## Login Admin
 Username: admin@gmail.com
