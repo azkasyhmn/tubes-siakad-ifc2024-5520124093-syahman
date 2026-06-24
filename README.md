@@ -35,6 +35,7 @@ Mengambil mata kuliah dan export ke pdf
 ### Jadwal Kuliah
 Menampilkan jadwal kuliah
 
+<<<<<<< HEAD
 ### Website
 Link: https://si-akademik.site.je/
 
@@ -45,3 +46,7 @@ Password: 123
 ## Login User
 Username: syahman@gmail.com
 Password: 246
+=======
+### Hasil Website
+Link: (https://si-akademik.site.je/)
+>>>>>>> 4ff4464 (add export KRS to excel in admin and edit KRS blade)

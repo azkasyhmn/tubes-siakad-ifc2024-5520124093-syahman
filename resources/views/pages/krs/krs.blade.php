@@ -15,6 +15,9 @@
                 <a href="{{ route('krs.export.pdf') }}" class="btn btn-danger mb-3">
                     Export PDF
                 </a>
+                <a href="{{ route('krs.export.excel') }}" class="btn btn-success mb-3">
+                    <i class="fa-solid fa-file-excel me-1"></i>Export Excel
+                </a>
             @elseif(auth()->user()->isMahasiswa())
                 <a href="{{ route('mahasiswa.krs.create') }}" class="btn btn-primary mb-3">Ambil Mata Kuliah</a>
                 <a href="{{ route('mahasiswa.krs.export.pdf') }}" class="btn btn-danger mb-3">

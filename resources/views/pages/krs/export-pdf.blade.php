@@ -11,7 +11,6 @@
             color: #1a1a1a;
             padding: 30px;
         }
-
         .header {
             text-align: center;
             border-bottom: 3px solid #0d6efd;
@@ -24,10 +23,7 @@
             color: #0d6efd;
             margin-bottom: 2px;
         }
-        .header p {
-            font-size: 11px;
-            color: #555;
-        }
+        .header p { font-size: 11px; color: #555; }
 
         .info-box {
             background: #f0f4ff;
@@ -38,22 +34,12 @@
         }
         .info-box table { width: 100%; }
         .info-box td { padding: 2px 0; font-size: 12px; }
-        .info-box td:first-child {
-            width: 130px;
-            color: #555;
-        }
+        .info-box td:first-child { width: 130px; color: #555; }
         .info-box td:nth-child(2) { width: 10px; }
         .info-box td:last-child { font-weight: bold; }
 
-        .krs-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-        .krs-table thead tr {
-            background: #0d6efd;
-            color: #fff;
-        }
+        .krs-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        .krs-table thead tr { background: #0d6efd; color: #fff; }
         .krs-table th {
             padding: 8px 10px;
             text-align: left;
@@ -65,14 +51,9 @@
             border-bottom: 1px solid #e9ecef;
             font-size: 11px;
         }
-        .krs-table tbody tr:nth-child(even) {
-            background: #f8fafc;
-        }
+        .krs-table tbody tr:nth-child(even) { background: #f8fafc; }
 
-        .total-box {
-            text-align: right;
-            margin-bottom: 30px;
-        }
+        .total-box { text-align: right; margin-bottom: 30px; }
         .total-box span {
             background: #0d6efd;
             color: #fff;
@@ -81,11 +62,8 @@
             font-size: 12px;
         }
 
-        .ttd {
-            margin-top: 40px;
-            display: table;
-            width: 100%;
-        }
+        /* Tanda tangan — hanya untuk mahasiswa */
+        .ttd { margin-top: 40px; display: table; width: 100%; }
         .ttd-box {
             display: table-cell;
             width: 50%;
@@ -101,6 +79,14 @@
             margin-right: auto;
         }
 
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 10px;
+            color: #aaa;
+            border-top: 1px solid #eee;
+            padding-top: 8px;
+        }
     </style>
 </head>
 <body>
@@ -113,31 +99,39 @@
 
     <div class="info-box">
         <table>
-            <tr>
-                <td>Nama</td>
-                <td>:</td>
-                <td>{{ $nama }}</td>
-            </tr>
             @if(auth()->user()->isMahasiswa())
             <tr>
-                <td>NPM</td>
-                <td>:</td>
+                <td>Nama</td><td>:</td>
+                <td>{{ $nama }}</td>
+            </tr>
+            <tr>
+                <td>NPM</td><td>:</td>
                 <td>{{ auth()->user()->npm }}</td>
             </tr>
-            @endif
             <tr>
-                <td>Total Mata Kuliah</td>
-                <td>:</td>
+                <td>Total Mata Kuliah</td><td>:</td>
                 <td>{{ $dataKrs->count() }} mata kuliah</td>
             </tr>
-            @php
-                $totalSks = $dataKrs->sum(fn($k) => $k->mataKuliah->sks ?? 0);
-            @endphp
+            @php $totalSks = $dataKrs->sum(fn($k) => $k->mataKuliah->sks ?? 0); @endphp
             @if($totalSks > 0)
             <tr>
-                <td>Total SKS</td>
-                <td>:</td>
+                <td>Total SKS</td><td>:</td>
                 <td>{{ $totalSks }} SKS</td>
+            </tr>
+            @endif
+
+            @else
+            <tr>
+                <td>Total Mahasiswa</td><td>:</td>
+                <td>{{ $dataKrs->groupBy('npm')->count() }} mahasiswa</td>
+            </tr>
+            <tr>
+                <td>Total Data KRS</td><td>:</td>
+                <td>{{ $dataKrs->count() }} entri</td>
+            </tr>
+            <tr>
+                <td>Periode Cetak</td><td>:</td>
+                <td>{{ now()->format('d F Y') }}</td>
             </tr>
             @endif
         </table>
@@ -147,12 +141,14 @@
         <thead>
             <tr>
                 <th style="width:30px;">No</th>
-                <th>Mata Kuliah</th>
-                @if($totalSks > 0)
-                    <th style="width:60px;">SKS</th>
-                @endif
                 @if(auth()->user()->isAdmin())
                     <th>Mahasiswa</th>
+                    <th>NPM</th>
+                    <th>Mata Kuliah</th>
+                    <th style="width:50px;">SKS</th>
+                @else
+                    <th>Mata Kuliah</th>
+                    <th style="width:50px;">SKS</th>
                 @endif
             </tr>
         </thead>
@@ -160,17 +156,19 @@
             @forelse($dataKrs as $i => $krs)
             <tr>
                 <td>{{ $i + 1 }}</td>
-                <td>{{ $krs->mataKuliah->nama ?? '-' }}</td>
-                @if($totalSks > 0)
-                    <td>{{ $krs->mataKuliah->sks ?? '-' }}</td>
-                @endif
                 @if(auth()->user()->isAdmin())
                     <td>{{ $krs->mahasiswa->nama ?? '-' }}</td>
+                    <td>{{ $krs->mahasiswa->npm  ?? '-' }}</td>
+                    <td>{{ $krs->mataKuliah->nama ?? '-' }}</td>
+                    <td>{{ $krs->mataKuliah->sks  ?? '-' }}</td>
+                @else
+                    <td>{{ $krs->mataKuliah->nama ?? '-' }}</td>
+                    <td>{{ $krs->mataKuliah->sks  ?? '-' }}</td>
                 @endif
             </tr>
             @empty
             <tr>
-                <td colspan="4" style="text-align:center; color:#aaa; padding:20px;">
+                <td colspan="5" style="text-align:center; color:#aaa; padding:20px;">
                     Belum ada data KRS
                 </td>
             </tr>
@@ -178,12 +176,13 @@
         </tbody>
     </table>
 
-    @if($totalSks > 0)
+    @if(auth()->user()->isMahasiswa() && isset($totalSks) && $totalSks > 0)
     <div class="total-box">
         <span>Total SKS: {{ $totalSks }}</span>
     </div>
     @endif
 
+    @if(auth()->user()->isMahasiswa())
     <div class="ttd">
         <div class="ttd-box">
             <p>Mengetahui,</p>
@@ -196,6 +195,7 @@
             <div class="ttd-line">{{ $nama }}</div>
         </div>
     </div>
+    @endif
 
 </body>
 </html>

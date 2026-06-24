@@ -18,6 +18,10 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     Route::get('/beranda', [DashboardController::class, 'adminDashboard'])->name('admin.dashboard');
     Route::get('/krs/export-pdf', [KrsController::class, 'exportPdf'])->name('krs.export.pdf');
+
+    Route::get('/krs/export-pdf',   [KrsController::class, 'exportPdf'])->name('krs.export.pdf');
+    Route::get('/krs/export-excel', [KrsController::class, 'exportExcel'])->name('krs.export.excel');
+
     Route::resource('dosen',      DosenController::class);
     Route::resource('mahasiswa',  MahasiswaController::class);
     Route::resource('matakuliah', MataKuliahController::class);
@@ -28,6 +32,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
 Route::middleware(['auth', 'role:mahasiswa'])->prefix('mhs')->group(function () {
     Route::get('/beranda', [DashboardController::class, 'mahasiswaDashboard'])->name('mahasiswa.dashboard');
     Route::get('/krs/export-pdf', [KrsController::class, 'exportPdf'])->name('mahasiswa.krs.export.pdf');
+    
     Route::resource('krs', KrsController::class)
         ->only(['index', 'show', 'create', 'store'])
         ->names([

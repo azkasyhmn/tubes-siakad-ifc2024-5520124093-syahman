@@ -8,6 +8,8 @@ use App\Models\Krs;
 use App\Models\MataKuliah;
 use App\Models\Mahasiswa;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Exports\KrsExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class KrsController extends Controller
 {
@@ -155,8 +157,7 @@ class KrsController extends Controller
         return redirect()->route('krs.index')->with('success', 'Data KRS berhasil dihapus.');
     }
 
-    public function exportPdf()
-        {
+    public function exportPdf() {
             if (auth()->user()->isAdmin()) {
                 $dataKrs = Krs::with(['mahasiswa', 'mataKuliah'])->orderByDesc('id')->get();
                 $title   = 'Data KRS Seluruh Mahasiswa';
@@ -171,5 +172,11 @@ class KrsController extends Controller
             $pdf = Pdf::loadView('pages.krs.export-pdf', compact('dataKrs', 'title', 'nama'))->setPaper('a4', 'portrait');
 
             return $pdf->download('KRS-' . str_replace(' ', '-', $nama) . '.pdf');
-        }
+    }
+
+    public function exportExcel() {
+        $filename = 'Data-KRS-' . now()->format('d-m-Y') . '.xlsx';
+
+        return Excel::download(new KrsExport, $filename);
+    }
 }
