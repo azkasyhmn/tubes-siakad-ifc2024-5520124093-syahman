@@ -1,8 +1,16 @@
-# Nama Aplikasi
-Aplikasi SIAKAD (Sistem Informasi Akademik) berbasis web yang dibangun
-menggunakan Laravel untuk mengelola data akademik mahasiswa.
+# SIAKAD (Sistem Informasi Akademik)
+Aplikasi SIAKAD berbasis web yang dibangun menggunakan Laravel untuk mengelola data akademik mahasiswa.
 
 ## Halaman & Fungsi
+
+## Website
+Link: https://si-akademik.site.je/
+
+### Admin
+Username: admin@gmail.com | Password: 123
+
+### User
+Username: syahman@gmail.com | Password: 246
 
 ## Halaman Login
 Terdapat 2 role: Admin dan Mahasiswa
@@ -35,18 +43,3 @@ Mengambil mata kuliah dan export ke pdf
 ### Jadwal Kuliah
 Menampilkan jadwal kuliah
 
-<<<<<<< HEAD
-### Website
-Link: https://si-akademik.site.je/
-
-## Login Admin
-Username: admin@gmail.com
-Password: 123
-
-## Login User
-Username: syahman@gmail.com
-Password: 246
-=======
-### Hasil Website
-Link: (https://si-akademik.site.je/)
->>>>>>> 4ff4464 (add export KRS to excel in admin and edit KRS blade)
