@@ -43,6 +43,6 @@ Mengambil mata kuliah dan export ke pdf
 ### Jadwal Kuliah
 Menampilkan jadwal kuliah
 
-### Screenshots
+## Screenshots
 Screenshots setiap halaman: [/screenshots](https://github.com/azkasyhmn/tubes-siakad-ifc2024-5520124093-syahman/tree/main/screenshots)
 
